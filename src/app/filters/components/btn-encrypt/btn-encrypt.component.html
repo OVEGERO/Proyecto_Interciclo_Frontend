@@ -1,0 +1,60 @@
+<p-toast position="top-right"></p-toast>
+<div class="card mt-5 animate__animated animate__fadeIn" style="max-width: 960px; margin: auto;">
+  <div class="grid">
+    <div class="col-12 md:col-4 text-center mt-4">
+      <span class="p-float-label" style="display: inline-block;">
+        <p-dropdown [options]="modes" [(ngModel)]="selectedMode" optionLabel="name" placeholder="Selecciona un modo"
+          [showClear]="true" #mode ariaLabel="modo" (onClear)="onClear(mode.ariaLabel)"
+          inputId="float-label1"></p-dropdown>
+        <label for="float-label1">Modo</label>
+      </span>
+    </div>
+    <div class="col-12 md:col-4 text-center mt-4">
+      <span class="p-float-label" style="display: inline-block;">
+        <p-dropdown [options]="options" [(ngModel)]="selectedOption" optionLabel="name"
+          placeholder="Selecciona una operación" [showClear]="true" #option ariaLabel="operacion"
+          (onClear)="onClear(option.ariaLabel)" inputId="float-label2"></p-dropdown>
+        <label for="float-label2">Operación</label>
+      </span>
+    </div>
+    <div class="col-12 md:col-4 text-center mt-4">
+      <span class="p-float-label" style="display: inline-block;">
+        <p-inputNumber inputId="integeronly" [(ngModel)]="key_size" (onBlur)="onBlur()"
+          [disabled]="
+            this.public_key != '' "></p-inputNumber>
+        <label htmlFor="number-input">Tamaño de la clave</label>
+      </span>
+    </div>
+    <div class="col-12 md:col-6 text-center mt-4">
+      <span class="p-float-label" style="display: inline-block;">
+        <p-password [disabled]="true" [feedback]="false" [(ngModel)]="public_key" [toggleMask]="true"></p-password>
+        <label htmlFor="number-input">Clave Pública</label>
+      </span>
+    </div>
+    <div class="col-12 md:col-6 text-center mt-4" [hidden]="this.encryption_type == 'rsa'">
+      <span class="p-float-label" style="display: inline-block;">
+        <p-password [disabled]="true" [feedback]="false" [(ngModel)]="iv" [toggleMask]="true"></p-password>
+        <label htmlFor="number-input">IV</label>
+      </span>
+    </div>
+    <div class="col-12 md:col-6 text-center mt-4" [hidden]="this.encryption_type == 'aes'">
+      <span class="p-float-label" style="display: inline-block;">
+        <p-password [disabled]="true" [feedback]="false" [(ngModel)]="private_key" [toggleMask]="true"></p-password>
+        <label htmlFor="number-input">Clave Privada</label>
+      </span>
+    </div>
+    <div *ngIf="!loading" class="col-12 md:col-6 flex align-items-center justify-content-center mt-3 mb-5">
+      <button (click)="onClick()" pButton pRipple label="Iniciar Operación" class="p-button-warning"
+        [disabled]="onModeChange() || loading"></button>
+    </div>
+    <div *ngIf="loading" style="flex-direction: column; align-items: center;" class="col-12 flex justify-content-center mt-3 mb-5">
+      <p>Realizando las operaciones...</p>
+      <img src="/assets/loader.svg" height="50" width="50">
+    </div>
+    <div *ngIf="!loading" class="col-12 md:col-6 flex align-items-center justify-content-center mt-3 mb-5">
+      <button (click)="onClickDisabled()" [disabled]="public_key == ''" pButton pRipple label="Quitar Claves"
+        class="p-button-warning">
+      </button>
+    </div>
+  </div>
+</div>

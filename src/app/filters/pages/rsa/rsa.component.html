@@ -1,0 +1,12 @@
+<app-text-area (onTextChange)="setText($event)" [text]="text"></app-text-area>
+<app-file-upload (onFileReader)="readFile($event)" ></app-file-upload>
+<app-btn-encrypt
+  [public_key]="keys.public_key"
+  [private_key]="keys.private_key"
+  [iv]="keys.iv"
+  (onResultText)="setResultText($event)"
+  [text]="text"
+  [key_size]="keys.key_size"
+  (onClearKeys)="clearKeys($event)"
+></app-btn-encrypt>
+<app-view-pass (onEncryptData)="setKeys($event)"></app-view-pass>
